@@ -44,8 +44,14 @@ sequenceDiagram
     end
 ```
 
+Full list of default Mermaid themes... In the JS https://github.com/mermaid-js/mermaid/blob/b34f7bcdd5ccca50e30efef90de7f2be301000ba/src/themes/index.js
+- base
+- dark
+- default
+- forest
+- neutral
 
-Neutral + dark mode
+### Neutral + dark mode
 
 ```mermaid
 %%{init: {'theme': 'neutral', 'themeVariables': {'darkMode': true}, "flowchart" : { "curve" : "basis" } } }%%
@@ -69,10 +75,34 @@ sequenceDiagram
     end
 ```
 
-Forest + darkMode
+### Forest + darkMode
 
 ```mermaid
 %%{init: {'theme': 'forest', 'themeVariables': {'darkMode': true}, "flowchart" : { "curve" : "basis" } } }%%
+sequenceDiagram
+    participant GitHub Runner
+    participant Azure
+    participant AKS
+    participant MCR
+    participant App
+    GitHub Runner->>Azure: Login
+    Azure-->>GitHub Runner: Token
+    GitHub Runner->>AKS: RunCmd: Check for existing install
+    Note right of AKS: Conditionally<br/>Force Uninstall
+    GitHub Runner->>AKS: RunCmd: Helm Install dry run
+    GitHub Runner->>AKS: RunCmd: Helm Install
+    AKS->>App: Deploy App
+    AKS-->>MCR: Retrieve Container Images
+    GitHub Runner->>AKS: RunCmd: Check deployment
+    loop WaitForIP
+        AKS->>AKS: Wait for IP Address
+    end
+```
+
+### Dark theme
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': {'darkMode': true}, "flowchart" : { "curve" : "basis" } } }%%
 sequenceDiagram
     participant GitHub Runner
     participant Azure
